@@ -2,11 +2,14 @@
 const dotenv = require('dotenv');
 const express = require('express');
 
-// import router
-const routes = require('./routes'); // jika menggunakan nama file index.js, import tidak perlu ditulis lengkap './routes/index.js'
+// import database & router
+// jika file yg ingin diimport memiliki nama file index.js, alamat import tidak perlu ditulis lengkap
+const database = require('./db');
+const routes = require('./routes'); 
 
 // inisiasi library
-dotenv.config();
+dotenv.config(); // inisiasi dotenv supaya bisa baca dari process.env.*
+database.connect(); // menyambungkan ke database
 const app = express();
 
 // atur port
