@@ -12,6 +12,9 @@ const getAllTodo = async (req, res) => {
       message: 'Operation failed',
     });
   }
+
+  // get all tidak perlu pengecekan jika rows berisi atau tidak
+  // hal ini mempermudah handling response di sisi frontend karena hasil data selalu berupa array
  
   // tampilkan hasil
   return res.status(200).json({
@@ -24,8 +27,10 @@ const createTodo = async (req, res) => {
   // ambil title dan detail dari body
   const { title, detail } = req.body;
 
+  // tambahkan todo ke database, tidak perlu ada pengecekan jika tidak ada field yg bersifat unik di tabel
+  let insertResult;
   try {
-    await db.query('INSERT INTO todos(title, detail) VALUES ($1, $2)', [title, detail]);
+    insertResult = await db.query('INSERT INTO todos(title, detail) VALUES ($1, $2) RETURNING id', [title, detail]);
   } catch (err) {
     // jika gagal, berikan response gagal
     return res.status(500).json({
@@ -33,8 +38,10 @@ const createTodo = async (req, res) => {
     });
   }
 
+  // tampilkan hasil
   return res.status(201).json({
     data: {
+      id: insertResult.rows[0].id,
       title,
       detail,
     },
@@ -57,6 +64,9 @@ const getSingleTodo = async (req, res) => {
     });
   }
  
+  // get single harus mengecek jika data ada atau tidak
+  // hal ini memungkinkan bentuk response yang konsisten dan mempermudah handling di sisi frontend
+
   // jika hasil kosong, berarti data tidak ada
   if (dataResult.rows.length === 0) {
     // berikan response tidak ditemukan
