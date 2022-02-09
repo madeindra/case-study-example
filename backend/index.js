@@ -18,6 +18,9 @@ const app = express();
 // atur port
 const port = process.env.APP_PORT || '3001';
 
+// terapkan pembaca request body json
+app.use(express.json());
+
 // terapkan router
 app.use(routes);
 
