@@ -27,7 +27,7 @@ const register = async (req, res) => {
   
   // gunakan try catch saat memanggil fungsi async
   try {
-    dataResult = await db.query('SELECT email FROM users WHERE email = $1::text', [email]);
+    dataResult = await db.query('SELECT email FROM users WHERE email = $1', [email]);
   } catch (err) {
     // jika gagal, berikan response gagal
     return res.status(500).json({
@@ -49,7 +49,7 @@ const register = async (req, res) => {
     const encryptedPassword = await bcrypt.hash(password, saltRount);
 
     // tulis ke database
-    await db.query('INSERT INTO users (email, password) VALUES ($1::text, $2::text)', [email, encryptedPassword]);
+    await db.query('INSERT INTO users (email, password) VALUES ($1, $2)', [email, encryptedPassword]);
   } catch (err) {
     // jika gagal, berikan response gagal
     return res.status(500).json({
@@ -80,7 +80,7 @@ const login = async (req, res) => {
   
   // gunakan try catch saat memanggil fungsi async
   try {
-    dataResult = await db.query('SELECT email, password FROM users WHERE email = $1::text', [email]);
+    dataResult = await db.query('SELECT email, password FROM users WHERE email = $1', [email]);
   } catch (err) {
     // jika gagal, berikan response gagal
     return res.status(500).json({
