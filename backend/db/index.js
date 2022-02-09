@@ -5,7 +5,7 @@ const { Client } = require('pg')
 const dbHost = process.env.POSTGRES_HOST || 'localhost';
 const dbUser = process.env.POSTGRES_USER || 'postgres';
 const dbDatabase = process.env.POSTGRES_DATABASE || 'postgres';
-const dbPassword = process.env.POSTGRES_PASSWORD || null;
+const dbPassword = process.env.POSTGRES_PASSWORD || 'password';
 const dbPort = process.env.POSTGRES_PORT || '5432';
 
 // konfigurasi untuk koneksi ke database
