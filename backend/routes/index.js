@@ -15,8 +15,9 @@ router.post('/api/registration', apiKeyMiddleware, authController.register);
 router.post('/api/login', apiKeyMiddleware, authController.login);
 
 // gunakan kata jamak / plural pada penamaan resource  
-router.get('/api/todos', jwtMiddleware, todoController.getTodo);
+router.get('/api/todos', jwtMiddleware, todoController.getAllTodo);
 router.post('/api/todos', jwtMiddleware, todoController.createTodo);
+router.get('/api/todos/:id', jwtMiddleware, todoController.getSingleTodo);
 router.put('/api/todos/:id', jwtMiddleware, todoController.updateTodo);
 router.delete('/api/todos/:id', jwtMiddleware, todoController.deleteTodo);
 
