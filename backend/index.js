@@ -1,5 +1,7 @@
+// inisiasi dotenv supaya bisa baca dari process.env.*
+require('dotenv').config(); 
+
 // import library
-const dotenv = require('dotenv');
 const express = require('express');
 
 // import database & router
@@ -7,9 +9,10 @@ const express = require('express');
 const database = require('./db');
 const routes = require('./routes'); 
 
-// inisiasi library
-dotenv.config(); // inisiasi dotenv supaya bisa baca dari process.env.*
-database.connect(); // menyambungkan ke database
+// menyambungkan ke database
+database.connect();
+
+// inisiasi express
 const app = express();
 
 // atur port
