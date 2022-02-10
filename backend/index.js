@@ -3,6 +3,7 @@ require('dotenv').config();
 
 // import library
 const express = require('express');
+const cors = require('cors');
 
 // import database & router
 // jika file yg ingin diimport memiliki nama file index.js, alamat import tidak perlu ditulis lengkap
@@ -20,6 +21,9 @@ const port = process.env.APP_PORT || '3001';
 
 // terapkan pembaca request body json
 app.use(express.json());
+
+// terapkan cors, hati-hati menggunakna cors di production
+app.use(cors());
 
 // terapkan router
 app.use(routes);
