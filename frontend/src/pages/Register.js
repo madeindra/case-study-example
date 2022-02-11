@@ -25,10 +25,15 @@ function Register() {
   
     // kirim request
     try {
-      await sendRequest(`${baseUrl}/api/registration`, 'post', data);
+      const result = await sendRequest(`${baseUrl}/api/registration`, 'post', data);
+      
+      // jika register berhasil
+      if (result.data) {
+        window.alert(result.data.message);
+      }
     } catch (err) {
-      // jika gagal, tampilkan alert
-      window.alert(err.toString());
+      // jika gagal, tampilkan pesan error dari response api
+      window.alert(err.response.data.message);
     }
   }
 

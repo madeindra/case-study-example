@@ -25,10 +25,16 @@ function Login() {
   
     // kirim request
     try {
-      await sendRequest(`${baseUrl}/api/login`, 'post', data);
+      const result = await sendRequest(`${baseUrl}/api/login`, 'post', data);
+      
+      // jika login berhasil
+      if (result.data) {
+        sessionStorage.setItem('token', result.data.accessToken)
+        window.alert(result.data.message);
+      }
     } catch (err) {
-      // jika gagal, tampilkan alert
-      window.alert(err.toString());
+      // jika gagal, tampilkan pesan error dari response api
+      window.alert(err.response.data.message);
     }
   }
 
