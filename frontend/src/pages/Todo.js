@@ -30,10 +30,15 @@ function Todo() {
   
     // kirim request
     try {
-      await sendRequest(`${baseUrl}/api/todos`, 'post', data, token);
+      const result = await sendRequest(`${baseUrl}/api/todos`, 'post', data, token);
+      
+      // jika tambah berhasil
+      if (result.data) {
+        window.alert(result.data.message);
+      }
     } catch (err) {
-      // jika gagal, tampilkan alert
-      window.alert(err.toString());
+      // jika gagal, tampilkan pesan error dari response api
+      window.alert(err.response.data.message);
     }
   }
 
@@ -43,7 +48,7 @@ function Todo() {
     sendRequest(`${baseUrl}/api/todos`, 'get', {}, token)
       .then((res) => {setTodos(res.data.data)}) // bukan typo, jika field response bernama data, cara aksesnya memang res.data.data
       .catch((err) => window.alert(err.toString()));
-  }, [])
+  }, []);
 
   return (
     <div>
@@ -53,7 +58,7 @@ function Todo() {
       <header>Tambah Todo</header>
       <form onSubmit={handleAddTodo}>
         <input type='text' name='title' onChange={(e) => setTitle(e.target.value)} />
-        <input type='textarea' name='detail' onChange={(e) => setDetail(e.target.value)} />
+        <input type='text' name='detail' onChange={(e) => setDetail(e.target.value)} />
 
         <button type='submit'>
           Tambah
