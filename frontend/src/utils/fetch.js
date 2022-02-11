@@ -4,7 +4,7 @@ const axios = require('axios');
 // ambil api key dari environment variable
 const apiKey = process.env.REACT_APP_API_KEY;
 
-async function sendRequest(url = '', method = 'get', body = {}, jwt = null ) {
+function sendRequest(url = '', method = 'get', body = {}, jwt = null ) {
   // jika diberikan token JWT, buat header Authorization, jika tidak, buat header X-API-KEY 
   const authorization = jwt ? {'Authorization': `Bearer ${jwt}` } : {'X-API-KEY': apiKey};
   
@@ -14,16 +14,13 @@ async function sendRequest(url = '', method = 'get', body = {}, jwt = null ) {
     'Content-Type': 'application/json',
   }
 
-  // kirim request
-  const response = await axios({
+  // kirim request & langsung kembalikan
+  return axios({
     url,
     method,
     headers,
     data: JSON.stringify(body), // ubah object jadi json
   });
-
-  // beri response dalam bentuk json
-  return response.json();
 }
 
 export {
