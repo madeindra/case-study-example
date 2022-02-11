@@ -1,6 +1,9 @@
 // import library
 import React, { useState, useEffect } from 'react';
 
+// import component
+import Table from '../components/Table';
+
 // import fungsi buatan untuk kirim request
 import { sendRequest } from '../utils/fetch';
 
@@ -10,7 +13,7 @@ const token = sessionStorage.getItem('token');
 
 // halaman todo
 function Todo() {
-  const [todos, setTodos] = useState([]);
+  const [todos, setTodos] = useState([{}]);
   const [title, setTitle] = useState('');
   const [detail, setDetail] = useState('');
 
@@ -38,7 +41,7 @@ function Todo() {
   useEffect(() => {
     // karena useEffect tidak bisa async, gunakan bentuk then/catch untuk kirim request
     sendRequest(`${baseUrl}/api/todos`, 'get', {}, token)
-      .then((res) => setTodos(res.data.data)) // bukan typo, jika field response bernama data, cara aksesnya memang res.data.data
+      .then((res) => {setTodos(res.data.data)}) // bukan typo, jika field response bernama data, cara aksesnya memang res.data.data
       .catch((err) => window.alert(err.toString()));
   }, [])
 
@@ -57,7 +60,7 @@ function Todo() {
         </button>
       </form>
 
-      { todos  ? todos.toString() : '' }
+      <Table data={todos} />
     </div>
   );
 }
