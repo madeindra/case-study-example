@@ -19,7 +19,7 @@ Buat database dengan skema di bawah sebelum menjalankan project.
 CREATE TABLE users (
 	id serial PRIMARY KEY,
 	email VARCHAR UNIQUE,
-	password VARCHAR,
+	password VARCHAR
 );
 ```
 
@@ -35,7 +35,7 @@ CREATE TABLE users (
 CREATE TABLE todos (
 	id serial PRIMARY KEY,
 	title VARCHAR,
-	detail VARCHAR,
+	detail VARCHAR
 );
 ```
 
