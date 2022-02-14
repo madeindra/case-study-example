@@ -10,7 +10,9 @@ import App from './App';
 
 import Register from './pages/Register';
 import Login from './pages/Login';
-import Todo from './pages/Todo';
+import View from './pages/View';
+import Create from './pages/Create';
+import Update from './pages/Update';
 
 ReactDOM.render(
   <BrowserRouter>
@@ -18,7 +20,10 @@ ReactDOM.render(
       <Route path='/' element={<App />} />
       <Route path='register' element={<Register />} />
       <Route path='login' element={<Login />} />
-      <Route path='todo' element={<Todo />} />
+      
+      <Route path='todo' element={<View />} />
+      <Route path='todo/create' element={<Create />} />
+      <Route path='todo/update/:id' element={<Update />} />
     </Routes>
   </BrowserRouter>,
   document.getElementById('root')
