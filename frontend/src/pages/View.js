@@ -27,16 +27,17 @@ function View() {
 
   async function handleUpdate(id) {
     // alihkan user ke halaman update
-    return navigate(`todo/update/${id}`);
+    // karena alamat saat ini berada di 'todo' (cek index.js), cukup tulis 'update' tanpa diawali 'todo', maka akan otomatis dialihkan ke 'todo/update' (gabungan alamat sekarang + alamat navigasi)
+    return navigate(`update/${id}`);
   }
 
   async function handleDelete(id) {
     // kirim request
     try {
-      const result = await sendRequest(`${baseUrl}/api/todos`, 'delete', token);
+      const result = await sendRequest(`${baseUrl}/api/todos/${id}`, 'delete', {}, token);
       
-      // jika tambah berhasil
-      if (result.data) {
+      // jika hapus berhasil
+      if (result) {
         // jika API tidak memberikan response, kita bisa memberikan message sendiri
         window.alert('Todo berhasil dihapus');
       }
@@ -45,7 +46,6 @@ function View() {
       window.alert(err.response.data.message);
     }
   }
-
 
   return (
     <div>
@@ -77,9 +77,9 @@ function View() {
       </thead>
       
       <tbody>
-        { todos.map((element) => {
+        { todos.map((element, index) => {
           return (
-            <tr>
+            <tr key={index}>
               <td>
                 { element.id }
               </td>
