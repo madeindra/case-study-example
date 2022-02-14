@@ -23,8 +23,8 @@ function View() {
     // karena useEffect tidak bisa async, gunakan bentuk then/catch untuk kirim request
     sendRequest(`${baseUrl}/api/todos/${params.id}`, 'get', {}, token)
       .then((res) => {
-        setTitle(res.data.title);
-        setDetail(res.data.detail);
+        setTitle(res.data.data.title);
+        setDetail(res.data.data.detail);
       })
       .catch((err) => window.alert(err.toString()));
   }, [params.id]); // isi array ini berarti useEffect akan berjalan setiap kali nilai params.id berubah
@@ -44,9 +44,10 @@ function View() {
     try {
       const result = await sendRequest(`${baseUrl}/api/todos/${params.id}`, 'put', data, token);
       
-      // jika tambah berhasil
-      if (result.data) {
-        window.alert(result.data.message);
+      // jika update berhasil
+      if (result) {
+        // jika API tidak memberikan response, kita bisa memberikan message sendiri
+        window.alert('Todo berhasil diperbarui');
       }
     } catch (err) {
       // jika gagal, tampilkan pesan error dari response api
