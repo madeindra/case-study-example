@@ -6,7 +6,7 @@ const jwt = require('jsonwebtoken');
 const db = require('../db').getConnection();
 
 // ambil dari konfigurasi env
-const saltRount = process.env.APP_HASH_ROUND || 10;
+const saltRound = Number(process.env.APP_HASH_ROUND) || 10;
 const secret = process.env.APP_JWT_SECRET || 'secret';
 
 // gunakan nama fungsi yang menjelaskan kegunaannya
@@ -46,7 +46,7 @@ const register = async (req, res) => {
   // daftarkan user baru
   try {
     // buat hash password
-    const encryptedPassword = await bcrypt.hash(password, saltRount);
+    const encryptedPassword = await bcrypt.hash(password, saltRound);
 
     // tulis ke database
     await db.query('INSERT INTO users (email, password) VALUES ($1, $2)', [email, encryptedPassword]);
